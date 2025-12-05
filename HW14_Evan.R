@@ -5,6 +5,7 @@
 library(tidyverse)
 library(lmtest)
 
+#1A. Load Data
 rel_humidity <- read.csv("VAS_oCAM_TempRelHum_subset.csv")
 
 #Filter and clean up
@@ -16,11 +17,11 @@ rel_humidity_data <- rel_humidity %>%
   )
 
 #Graph data
-ggplot(rel_humidity_data, aes(x = temp_C, y = relative_humidity, shape = Site, color = Site)) +
+ggplot(rel_humidity_data, aes(temp_C, relative_humidity)) +
   geom_point() +
   geom_smooth(method = 'lm')
 
-ggplot(rel_humidity_data, aes(temp_C, relative_humidity)) +
+ggplot(rel_humidity_data, aes(x = temp_C, y = relative_humidity, shape = Site, color = Site)) +
   geom_point() +
   geom_smooth(method = 'lm')
 
@@ -31,7 +32,7 @@ lm_2 <- lm(relative_humidity ~ temp_C + Site, data = rel_humidity_data)
 
 #1C. Negative log likelihood
 
--logLik(lm_1) #smaller
+-logLik(lm_1) #lower NLL
 -logLik(lm_2)
 
 #1D. Likelihood ratio test
